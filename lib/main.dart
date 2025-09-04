@@ -1,5 +1,5 @@
 import 'package:expenzapp/constants/widgets/wrapper.dart';
-import 'package:expenzapp/screens/onboarding_screen.dart';
+
 import 'package:expenzapp/services/user_service.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
