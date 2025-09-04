@@ -1,5 +1,7 @@
 import 'package:expenzapp/constants/colors.dart';
 import 'package:expenzapp/constants/widgets/custom_button.dart';
+import 'package:expenzapp/screens/main_screen.dart';
+import 'package:expenzapp/services/user_service.dart';
 import 'package:flutter/material.dart';
 
 class UserDataScreen extends StatefulWidget {
@@ -157,7 +159,7 @@ class _UserDataScreenState extends State<UserDataScreen> {
                       ),
                       SizedBox(height: 50),
                       GestureDetector(
-                        onTap: () {
+                        onTap: () async {
                           if (_formKey.currentState!.validate()) {
                             //form is valid , process data
                             String userName = _userNameController.text;
@@ -166,9 +168,22 @@ class _UserDataScreenState extends State<UserDataScreen> {
                             String conformPassword =
                                 _conformPasswordcontroler.text;
 
-                            print(
-                              "$userName $email $password $conformPassword",
+                            //
+                            await UserService.storeUserDetails(
+                              userName: userName,
+                              email: email,
+                              password: password,
+                              confirmPassword: conformPassword,
+                              context: context,
                             );
+                            if (context.mounted) {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => MainScreen(),
+                                ),
+                              );
+                            }
                           }
                           ;
                         },
