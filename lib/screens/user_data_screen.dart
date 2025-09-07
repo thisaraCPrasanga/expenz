@@ -63,6 +63,7 @@ class _UserDataScreenState extends State<UserDataScreen> {
                           if (value!.isEmpty) {
                             return "Please Enter your Name!";
                           }
+                          return null;
                         },
                         decoration: InputDecoration(
                           hintText: "Name",
@@ -81,6 +82,7 @@ class _UserDataScreenState extends State<UserDataScreen> {
                           if (value!.isEmpty) {
                             return "Please Enter your Email!";
                           }
+                          return null;
                         },
                         decoration: InputDecoration(
                           hintText: "Email",
@@ -99,6 +101,7 @@ class _UserDataScreenState extends State<UserDataScreen> {
                           if (value!.isEmpty) {
                             return "Please Enter your Password!";
                           }
+                          return null;
                         },
                         obscureText: true,
                         decoration: InputDecoration(
@@ -118,6 +121,7 @@ class _UserDataScreenState extends State<UserDataScreen> {
                           if (value!.isEmpty) {
                             return "Please ReEnter your Password!";
                           }
+                          return null;
                         },
                         obscureText: true,
                         decoration: InputDecoration(
@@ -176,7 +180,8 @@ class _UserDataScreenState extends State<UserDataScreen> {
                               confirmPassword: conformPassword,
                               context: context,
                             );
-                            if (context.mounted) {
+                            if (context.mounted ||
+                                password == conformPassword) {
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
@@ -185,7 +190,6 @@ class _UserDataScreenState extends State<UserDataScreen> {
                               );
                             }
                           }
-                          ;
                         },
                         child: CustomButton(
                           buttonName: "Submit",
