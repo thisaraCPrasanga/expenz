@@ -25,7 +25,7 @@ class _IncomeExpenceCardState extends State<IncomeExpenceCard> {
   Widget build(BuildContext context) {
     return Container(
       width: MediaQuery.of(context).size.width * 0.45,
-      height: MediaQuery.of(context).size.height * 0.11,
+      height: MediaQuery.of(context).size.height * 0.13,
       decoration: BoxDecoration(
         color: widget.buttonColor,
         borderRadius: BorderRadius.circular(20),

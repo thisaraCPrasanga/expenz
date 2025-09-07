@@ -37,7 +37,7 @@ class _HomeScreenState extends State<HomeScreen> {
             children: [
               //bg color column
               Container(
-                height: MediaQuery.of(context).size.height * 0.3,
+                height: MediaQuery.of(context).size.height * 0.35,
                 decoration: BoxDecoration(
                   color: kMainColor.withOpacity(0.15),
                   borderRadius: BorderRadius.only(
