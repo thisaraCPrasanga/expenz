@@ -53,15 +53,15 @@ class Income {
   }
 
   //create income object from json object
-  factory Income.fromJson(Map<String, dynamic> data) {
+  factory Income.fromJson(Map<String, dynamic> json) {
     return Income(
-      id: data['id'],
-      title: data['title'],
-      amount: data['amount'],
-      categoty: IncomeCategoty.values[data['categoty']],
-      date: DateTime.parse(data['date']),
-      time: DateTime.parse(data['time']),
-      description: data['description'],
+      id: json['id'],
+      title: json['title'],
+      amount: json['amount'],
+      categoty: IncomeCategoty.values[json['categoty']],
+      date: DateTime.parse(json['date']),
+      time: DateTime.parse(json['time']),
+      description: json['description'],
     );
   }
 }
