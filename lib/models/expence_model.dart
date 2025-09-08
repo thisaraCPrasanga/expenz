@@ -39,7 +39,7 @@ final class Expense {
     required this.description,
   });
 
-  // Convert the Expense object to a JSON object
+  // Convert the Expense object to a JSON object for shared preferences
   Map<String, dynamic> toJson() {
     return {
       'id': id,
@@ -53,15 +53,15 @@ final class Expense {
   }
 
   // Create an Expense object from a JSON object
-  factory Expense.fromJson(Map<String, dynamic> json) {
+  factory Expense.fromJson(Map<String, dynamic> data) {
     return Expense(
-      id: json['id'],
-      title: json['title'],
-      amount: json['amount'],
-      category: ExpenseCategory.values[json['category']],
-      date: DateTime.parse(json['date']),
-      time: DateTime.parse(json['time']),
-      description: json['description'],
+      id: data['id'],
+      title: data['title'],
+      amount: data['amount'],
+      category: ExpenseCategory.values[data['category']],
+      date: DateTime.parse(data['date']),
+      time: DateTime.parse(data['time']),
+      description: data['description'],
     );
   }
 }
