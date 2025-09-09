@@ -1,11 +1,13 @@
 import 'package:expenzapp/constants/colors.dart';
 import 'package:expenzapp/models/expence_model.dart';
+import 'package:expenzapp/models/income_model_data.dart';
 import 'package:expenzapp/screens/add_new_screen.dart';
 import 'package:expenzapp/screens/budgets_screen.dart';
 import 'package:expenzapp/screens/home_screen.dart';
 import 'package:expenzapp/screens/profile_screen.dart';
 import 'package:expenzapp/screens/transaction_screen.dart';
 import 'package:expenzapp/services/expence_service.dart';
+import 'package:expenzapp/services/income_service.dart';
 import 'package:flutter/material.dart';
 
 class MainScreen extends StatefulWidget {
@@ -20,12 +22,23 @@ class _MainScreenState extends State<MainScreen> {
   int _currentPageIndex = 0;
 
   List<Expense> expenseList = [];
+  List<Income> incomeList = [];
+
   //Fetch all expenses
   void fetchAllExpenses() async {
     List<Expense> loadedExpence = await ExpensesService().loadExpences();
     setState(() {
       expenseList = loadedExpence;
       print(expenseList.length);
+    });
+  }
+
+  //function to fetch all incomes
+  void fetchAllIncomes() async {
+    List<Income> loadedIncome = await IncomeService().loadIncomes();
+    setState(() {
+      incomeList = loadedIncome;
+      print(incomeList.length);
     });
   }
 
@@ -37,12 +50,21 @@ class _MainScreenState extends State<MainScreen> {
     });
   }
 
+  // Add new income
+  void addNewIncome(Income newIncome) {
+    IncomeService().saveIncomes(newIncome, context);
+    setState(() {
+      incomeList.add(newIncome);
+    });
+  }
+
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
     setState(() {
       fetchAllExpenses();
+      fetchAllIncomes();
     });
   }
 
@@ -52,7 +74,7 @@ class _MainScreenState extends State<MainScreen> {
     final List<Widget> pages = [
       HomeScreen(),
       TransactionScreen(),
-      AddNewScreen(addExpense: addNewExpense),
+      AddNewScreen(addExpense: addNewExpense, addIncome: addNewIncome),
       BudgetsScreen(),
       ProfileScreen(),
     ];

@@ -4,13 +4,19 @@ import 'package:expenzapp/constants/widgets/custom_button.dart';
 import 'package:expenzapp/models/expence_model.dart';
 import 'package:expenzapp/models/income_model_data.dart';
 import 'package:expenzapp/services/expence_service.dart';
+import 'package:expenzapp/services/income_service.dart';
 
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 class AddNewScreen extends StatefulWidget {
   final Function(Expense) addExpense;
-  const AddNewScreen({super.key, required this.addExpense});
+  final Function(Income) addIncome;
+  const AddNewScreen({
+    super.key,
+    required this.addExpense,
+    required this.addIncome,
+  });
 
   @override
   State<AddNewScreen> createState() => _AddNewScreenState();
@@ -408,26 +414,67 @@ class _AddNewScreenState extends State<AddNewScreen> {
 
                         GestureDetector(
                           onTap: () async {
-                            //save the expence or the income data into shared prefrence
-                            List<Expense> loadedExpenses =
-                                await ExpensesService().loadExpences();
+                            if (_selectedMethode == 0) {
+                              // Save the expense data into shared preference
+                              List<Expense> loadedExpenses =
+                                  await ExpensesService().loadExpences();
 
-                            //create the epense to store
-                            Expense expense = Expense(
-                              id: loadedExpenses.length + 1,
-                              title: _titleControler.text,
-                              amount:
-                                  _amountControler.text.isEmpty
-                                      ? 0
-                                      : double.parse(_amountControler.text),
-                              category: _expenseCategory,
-                              date: _selectedDate,
-                              time: _selectedTime,
-                              description: _descriptionControler.text,
-                            );
+                              // Create the expense to store
+                              Expense expense = Expense(
+                                id: loadedExpenses.length + 1,
+                                title: _titleControler.text,
+                                amount:
+                                    _amountControler.text.isEmpty
+                                        ? 0
+                                        : double.parse(_amountControler.text),
+                                category: _expenseCategory,
+                                date: _selectedDate,
+                                time: _selectedTime,
+                                description: _descriptionControler.text,
+                              );
 
-                            //Add expence
-                            widget.addExpense(expense);
+                              // Add expense
+                              widget.addExpense(expense);
+
+                              // Clear the form
+                              _titleControler.clear();
+                              _amountControler.clear();
+                              _descriptionControler.clear();
+                              setState(() {
+                                _expenseCategory = ExpenseCategory.health;
+                                _selectedDate = DateTime.now();
+                                _selectedTime = DateTime.now();
+                              });
+                            } else {
+                              List<Income> loadedIncomes =
+                                  await IncomeService().loadIncomes();
+
+                              Income income = Income(
+                                id: loadedIncomes.length + 1,
+                                title: _titleControler.text,
+                                amount:
+                                    _amountControler.text.isEmpty
+                                        ? 0
+                                        : double.parse(_amountControler.text),
+                                categoty: _incomeCategoty,
+                                date: _selectedDate,
+                                time: _selectedTime,
+                                description: _descriptionControler.text,
+                              );
+
+                              //add income
+                              widget.addIncome(income);
+
+                              // Clear the form
+                              _titleControler.clear();
+                              _amountControler.clear();
+                              _descriptionControler.clear();
+                              setState(() {
+                                _expenseCategory = ExpenseCategory.health;
+                                _selectedDate = DateTime.now();
+                                _selectedTime = DateTime.now();
+                              });
+                            }
                           },
                           child: CustomButton(
                             buttonName: "Add",
